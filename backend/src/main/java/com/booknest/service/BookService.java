@@ -8,7 +8,7 @@ import com.booknest.entity.Genre;
 import com.booknest.repository.AuthorRepository;
 import com.booknest.repository.BookRepository;
 import com.booknest.repository.GenreRepository;
-import jakarta.persistence.EntityNotFoundException;
+import com.booknest.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -70,7 +70,7 @@ public class BookService {
 
     private Book findOrThrow(Long id) {
         return bookRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Book not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Book not found: " + id));
     }
 
     private Set<Author> resolveAuthors(Set<Long> ids) {

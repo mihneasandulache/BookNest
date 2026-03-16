@@ -4,6 +4,7 @@ import com.booknest.dto.review.ReviewRequest;
 import com.booknest.dto.review.ReviewResponse;
 import com.booknest.entity.User;
 import com.booknest.repository.UserRepository;
+import com.booknest.exception.ResourceNotFoundException;
 import com.booknest.service.ReviewService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -75,7 +76,7 @@ public class ReviewController {
 
     private Long resolveUserId(UserDetails principal) {
         User user = userRepository.findByEmail(principal.getUsername())
-                .orElseThrow(() -> new jakarta.persistence.EntityNotFoundException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         return user.getId();
     }
 }

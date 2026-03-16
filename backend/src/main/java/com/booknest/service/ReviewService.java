@@ -8,7 +8,7 @@ import com.booknest.entity.User;
 import com.booknest.repository.BookRepository;
 import com.booknest.repository.ReviewRepository;
 import com.booknest.repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
+import com.booknest.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,9 +36,9 @@ public class ReviewService {
 
     public ReviewResponse create(Long userId, ReviewRequest req) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found: " + userId));
         Book book = bookRepository.findById(req.getBookId())
-                .orElseThrow(() -> new EntityNotFoundException("Book not found: " + req.getBookId()));
+                .orElseThrow(() -> new ResourceNotFoundException("Book not found: " + req.getBookId()));
 
         Review review = Review.builder()
                 .user(user)
@@ -69,7 +69,7 @@ public class ReviewService {
 
     private Review findOrThrow(Long id) {
         return reviewRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Review not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Review not found: " + id));
     }
 
     private ReviewResponse toResponse(Review r) {

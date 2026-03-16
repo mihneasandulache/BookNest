@@ -4,6 +4,7 @@ import com.booknest.dto.userprofile.UserProfileRequest;
 import com.booknest.dto.userprofile.UserProfileResponse;
 import com.booknest.entity.User;
 import com.booknest.repository.UserRepository;
+import com.booknest.exception.ResourceNotFoundException;
 import com.booknest.service.UserProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,7 @@ public class UserProfileController {
 
     private Long resolveUserId(UserDetails principal) {
         User user = userRepository.findByEmail(principal.getUsername())
-                .orElseThrow(() -> new jakarta.persistence.EntityNotFoundException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         return user.getId();
     }
 }

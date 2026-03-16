@@ -3,6 +3,7 @@ package com.booknest.service;
 import com.booknest.dto.author.AuthorRequest;
 import com.booknest.dto.author.AuthorResponse;
 import com.booknest.entity.Author;
+import com.booknest.exception.ResourceNotFoundException;
 import com.booknest.repository.AuthorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -48,7 +49,7 @@ public class AuthorService {
 
     private Author findOrThrow(Long id) {
         return authorRepository.findById(id)
-                .orElseThrow(() -> new jakarta.persistence.EntityNotFoundException("Author not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Author not found: " + id));
     }
 
     public AuthorResponse toResponse(Author author) {
