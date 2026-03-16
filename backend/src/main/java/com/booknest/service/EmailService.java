@@ -20,4 +20,13 @@ public class EmailService {
         message.setText("Hi " + username + ",\n\nWelcome to BookNest! Start exploring and reviewing books.\n\nHappy reading!");
         mailSender.send(message);
     }
+
+    @Async
+    public void sendFeedbackConfirmationEmail(String toEmail, String username) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(toEmail);
+        message.setSubject("We received your feedback!");
+        message.setText("Hi " + username + ",\n\nThank you for your feedback! We appreciate you taking the time to share your thoughts.\n\nThe BookNest Team");
+        mailSender.send(message);
+    }
 }
