@@ -3,6 +3,7 @@ package com.booknest.service;
 import com.booknest.dto.genre.GenreRequest;
 import com.booknest.dto.genre.GenreResponse;
 import com.booknest.entity.Genre;
+import com.booknest.exception.ResourceNotFoundException;
 import com.booknest.repository.GenreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -44,7 +45,7 @@ public class GenreService {
 
     private Genre findOrThrow(Long id) {
         return genreRepository.findById(id)
-                .orElseThrow(() -> new jakarta.persistence.EntityNotFoundException("Genre not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Genre not found: " + id));
     }
 
     public GenreResponse toResponse(Genre genre) {

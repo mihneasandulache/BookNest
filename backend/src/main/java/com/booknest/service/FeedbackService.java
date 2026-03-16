@@ -6,7 +6,7 @@ import com.booknest.entity.Feedback;
 import com.booknest.entity.User;
 import com.booknest.repository.FeedbackRepository;
 import com.booknest.repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
+import com.booknest.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +22,7 @@ public class FeedbackService {
 
     public FeedbackResponse submit(Long userId, FeedbackRequest req) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found: " + userId));
 
         Feedback feedback = Feedback.builder()
                 .user(user)
@@ -43,7 +43,7 @@ public class FeedbackService {
 
     public void delete(Long id) {
         feedbackRepository.delete(feedbackRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Feedback not found: " + id)));
+                .orElseThrow(() -> new ResourceNotFoundException("Feedback not found: " + id)));
     }
 
     private FeedbackResponse toResponse(Feedback f) {

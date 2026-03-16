@@ -4,8 +4,7 @@ import com.booknest.dto.userprofile.UserProfileRequest;
 import com.booknest.dto.userprofile.UserProfileResponse;
 import com.booknest.entity.UserProfile;
 import com.booknest.repository.UserProfileRepository;
-import com.booknest.repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
+import com.booknest.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,17 +13,16 @@ import org.springframework.stereotype.Service;
 public class UserProfileService {
 
     private final UserProfileRepository userProfileRepository;
-    private final UserRepository userRepository;
 
     public UserProfileResponse getByUserId(Long userId) {
         UserProfile profile = userProfileRepository.findByUserId(userId)
-                .orElseThrow(() -> new EntityNotFoundException("Profile not found for user: " + userId));
+                .orElseThrow(() -> new ResourceNotFoundException("Profile not found for user: " + userId));
         return toResponse(profile);
     }
 
     public UserProfileResponse update(Long userId, UserProfileRequest req) {
         UserProfile profile = userProfileRepository.findByUserId(userId)
-                .orElseThrow(() -> new EntityNotFoundException("Profile not found for user: " + userId));
+                .orElseThrow(() -> new ResourceNotFoundException("Profile not found for user: " + userId));
         profile.setBio(req.getBio());
         profile.setAvatarUrl(req.getAvatarUrl());
         profile.setLocation(req.getLocation());
