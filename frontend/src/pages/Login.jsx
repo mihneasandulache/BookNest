@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext'
 export default function Login() {
   const { login } = useAuth()
   const navigate = useNavigate()
-  const [form, setForm] = useState({ username: '', password: '' })
+  const [form, setForm] = useState({ email: '', password: '' })
   const [error, setError] = useState('')
 
   const handleChange = (e) => {
@@ -31,9 +31,10 @@ export default function Login() {
         <h2>Login</h2>
         {error && <p style={styles.error}>{error}</p>}
         <input
-          name="username"
-          placeholder="Username"
-          value={form.username}
+          name="email"
+          type="email"
+          placeholder="Email"
+          value={form.email}
           onChange={handleChange}
           style={styles.input}
           required
