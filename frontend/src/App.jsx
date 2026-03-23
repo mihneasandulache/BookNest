@@ -5,6 +5,9 @@ import ProtectedRoute from './components/ProtectedRoute'
 import NavBar from './components/NavBar'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Books from './pages/Books'
+import Authors from './pages/Authors'
+import Genres from './pages/Genres'
 
 function Home() {
   return (
@@ -23,14 +26,10 @@ export default function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+          <Route path="/books" element={<ProtectedRoute><Books /></ProtectedRoute>} />
+          <Route path="/authors" element={<ProtectedRoute><Authors /></ProtectedRoute>} />
+          <Route path="/genres" element={<ProtectedRoute><Genres /></ProtectedRoute>} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
