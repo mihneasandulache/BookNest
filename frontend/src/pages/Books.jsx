@@ -5,10 +5,8 @@ import ConfirmModal from '../components/ConfirmModal'
 
 const emptyForm = {
   title: '',
-  isbn: '',
   publishedYear: '',
   description: '',
-  coverImageUrl: '',
   authorIds: [],
   genreIds: [],
 }
@@ -65,10 +63,8 @@ export default function Books() {
   const openEdit = (book) => {
     setForm({
       title: book.title,
-      isbn: book.isbn || '',
       publishedYear: book.publishedYear || '',
       description: book.description || '',
-      coverImageUrl: book.coverImageUrl || '',
       authorIds: book.authors.map(a => a.id),
       genreIds: book.genres.map(g => g.id),
     })
@@ -141,7 +137,6 @@ export default function Books() {
         <thead>
           <tr>
             <th style={styles.th}>Title</th>
-            <th style={styles.th}>ISBN</th>
             <th style={styles.th}>Year</th>
             <th style={styles.th}>Authors</th>
             <th style={styles.th}>Genres</th>
@@ -153,7 +148,6 @@ export default function Books() {
           {books.map(book => (
             <tr key={book.id}>
               <td style={styles.td}>{book.title}</td>
-              <td style={styles.td}>{book.isbn || '—'}</td>
               <td style={styles.td}>{book.publishedYear || '—'}</td>
               <td style={styles.td}>{book.authors.map(a => `${a.firstName} ${a.lastName}`).join(', ') || '—'}</td>
               <td style={styles.td}>{book.genres.map(g => g.name).join(', ') || '—'}</td>
@@ -167,7 +161,7 @@ export default function Books() {
             </tr>
           ))}
           {books.length === 0 && (
-            <tr><td colSpan={isAdmin ? 7 : 6} style={{ textAlign: 'center', padding: '1rem' }}>No books found.</td></tr>
+            <tr><td colSpan={isAdmin ? 6 : 5} style={{ textAlign: 'center', padding: '1rem' }}>No books found.</td></tr>
           )}
         </tbody>
       </table>
@@ -183,10 +177,8 @@ export default function Books() {
           <div style={styles.modal}>
             <h3>{editingId ? 'Edit Book' : 'Add Book'}</h3>
             <form onSubmit={handleSubmit} style={styles.formGrid}>
-              <input name="title" placeholder="Title" value={form.title} onChange={handleFormChange} style={styles.input} required />
-              <input name="isbn" placeholder="ISBN" value={form.isbn} onChange={handleFormChange} style={styles.input} />
+              <input name="title" placeholder="Title" value={form.title} onChange={handleFormChange} style={{ ...styles.input, gridColumn: '1 / -1' }} required />
               <input name="publishedYear" placeholder="Published Year" type="number" value={form.publishedYear} onChange={handleFormChange} style={styles.input} />
-              <input name="coverImageUrl" placeholder="Cover Image URL" value={form.coverImageUrl} onChange={handleFormChange} style={styles.input} />
               <textarea name="description" placeholder="Description" value={form.description} onChange={handleFormChange} style={{ ...styles.input, gridColumn: '1 / -1', height: '80px' }} />
 
               <div style={{ gridColumn: '1 / -1' }}>
