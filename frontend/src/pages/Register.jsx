@@ -9,8 +9,6 @@ export default function Register() {
     email: '',
     password: '',
     confirmPassword: '',
-    firstName: '',
-    lastName: '',
   })
   const [error, setError] = useState('')
 
@@ -30,8 +28,7 @@ export default function Register() {
         username: form.username,
         email: form.email,
         password: form.password,
-        firstName: form.firstName,
-        lastName: form.lastName,
+        confirmPassword: form.confirmPassword,
       })
       navigate('/login')
     } catch (err) {
@@ -44,22 +41,6 @@ export default function Register() {
       <form onSubmit={handleSubmit} style={styles.form}>
         <h2>Register</h2>
         {error && <p style={styles.error}>{error}</p>}
-        <input
-          name="firstName"
-          placeholder="First Name"
-          value={form.firstName}
-          onChange={handleChange}
-          style={styles.input}
-          required
-        />
-        <input
-          name="lastName"
-          placeholder="Last Name"
-          value={form.lastName}
-          onChange={handleChange}
-          style={styles.input}
-          required
-        />
         <input
           name="username"
           placeholder="Username"
