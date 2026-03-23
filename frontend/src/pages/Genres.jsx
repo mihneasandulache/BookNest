@@ -7,7 +7,7 @@ const emptyForm = { name: '', description: '' }
 
 export default function Genres() {
   const { role } = useAuth()
-  const isAdmin = role === 'ROLE_ADMIN'
+  const isAdmin = role === 'ADMIN'
 
   const [genres, setGenres] = useState([])
   const [showForm, setShowForm] = useState(false)

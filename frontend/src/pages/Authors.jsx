@@ -7,7 +7,7 @@ const emptyForm = { firstName: '', lastName: '', bio: '', nationality: '' }
 
 export default function Authors() {
   const { role } = useAuth()
-  const isAdmin = role === 'ROLE_ADMIN'
+  const isAdmin = role === 'ADMIN'
 
   const [authors, setAuthors] = useState([])
   const [showForm, setShowForm] = useState(false)

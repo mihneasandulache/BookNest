@@ -15,7 +15,7 @@ const emptyForm = {
 
 export default function Books() {
   const { role } = useAuth()
-  const isAdmin = role === 'ROLE_ADMIN'
+  const isAdmin = role === 'ADMIN'
 
   const [books, setBooks] = useState([])
   const [totalPages, setTotalPages] = useState(0)
