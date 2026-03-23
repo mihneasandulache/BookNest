@@ -29,7 +29,7 @@ services:
       SPRING_DATASOURCE_USERNAME: booknest
       SPRING_DATASOURCE_PASSWORD: booknest_secret
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      JWT_SECRET: ${JWT_SECRET}
+      JWT_SECRET: ${JWT_SECRET:-default_jwt_secret}
       MAIL_HOST: ${MAIL_HOST:-sandbox.smtp.mailtrap.io}
       MAIL_PORT: ${MAIL_PORT:-2525}
       MAIL_USERNAME: ${MAIL_USERNAME}

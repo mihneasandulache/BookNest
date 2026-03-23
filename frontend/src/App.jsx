@@ -8,6 +8,7 @@ import Register from './pages/Register'
 import Books from './pages/Books'
 import Authors from './pages/Authors'
 import Genres from './pages/Genres'
+import Feedback from './pages/Feedback'
 
 function Home() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
           <Route path="/books" element={<ProtectedRoute><Books /></ProtectedRoute>} />
           <Route path="/authors" element={<ProtectedRoute><Authors /></ProtectedRoute>} />
           <Route path="/genres" element={<ProtectedRoute><Genres /></ProtectedRoute>} />
+          <Route path="/feedback" element={<ProtectedRoute><Feedback /></ProtectedRoute>} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
