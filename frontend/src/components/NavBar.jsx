@@ -20,7 +20,10 @@ export default function NavBar() {
             <Link to="/books" style={styles.link}>Books</Link>
             <Link to="/authors" style={styles.link}>Authors</Link>
             <Link to="/genres" style={styles.link}>Genres</Link>
-            <Link to="/feedback" style={styles.link}>Feedback</Link>
+            {role === 'ADMIN'
+              ? <Link to="/admin/feedback" style={styles.link}>Feedback</Link>
+              : <Link to="/feedback" style={styles.link}>Feedback</Link>
+            }
             <button onClick={handleLogout} style={styles.button}>Logout</button>
           </>
         ) : (
