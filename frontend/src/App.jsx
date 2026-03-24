@@ -9,6 +9,7 @@ import Books from './pages/Books'
 import Authors from './pages/Authors'
 import Genres from './pages/Genres'
 import Feedback from './pages/Feedback'
+import BookDetail from './pages/BookDetail'
 
 function Home() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route path="/books" element={<ProtectedRoute><Books /></ProtectedRoute>} />
+          <Route path="/books/:id" element={<ProtectedRoute><BookDetail /></ProtectedRoute>} />
           <Route path="/authors" element={<ProtectedRoute><Authors /></ProtectedRoute>} />
           <Route path="/genres" element={<ProtectedRoute><Genres /></ProtectedRoute>} />
           <Route path="/feedback" element={<ProtectedRoute><Feedback /></ProtectedRoute>} />

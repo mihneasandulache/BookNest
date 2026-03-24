@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import api from '../api/axios'
 import { useAuth } from '../context/AuthContext'
 import ConfirmModal from '../components/ConfirmModal'
@@ -147,7 +148,7 @@ export default function Books() {
         <tbody>
           {books.map(book => (
             <tr key={book.id}>
-              <td style={styles.td}>{book.title}</td>
+              <td style={styles.td}><Link to={`/books/${book.id}`} style={{ color: '#1a1a2e', fontWeight: 'bold' }}>{book.title}</Link></td>
               <td style={styles.td}>{book.publishedYear || '—'}</td>
               <td style={styles.td}>{book.authors.map(a => `${a.firstName} ${a.lastName}`).join(', ') || '—'}</td>
               <td style={styles.td}>{book.genres.map(g => g.name).join(', ') || '—'}</td>
