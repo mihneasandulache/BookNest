@@ -10,6 +10,10 @@ export default function Authors() {
   const isAdmin = role === 'ADMIN'
 
   const [authors, setAuthors] = useState([])
+  const [totalPages, setTotalPages] = useState(0)
+  const [page, setPage] = useState(0)
+  const [search, setSearch] = useState('')
+  const [searchInput, setSearchInput] = useState('')
   const [showForm, setShowForm] = useState(false)
   const [editingId, setEditingId] = useState(null)
   const [form, setForm] = useState(emptyForm)
@@ -18,14 +22,21 @@ export default function Authors() {
 
   const fetchAuthors = async () => {
     try {
-      const res = await api.get('/authors')
-      setAuthors(res.data)
+      const res = await api.get('/authors', { params: { page, size: 10, search: search || undefined } })
+      setAuthors(res.data.content)
+      setTotalPages(res.data.totalPages)
     } catch {
       setError('Failed to load authors')
     }
   }
 
-  useEffect(() => { fetchAuthors() }, [])
+  useEffect(() => { fetchAuthors() }, [page, search])
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+    setPage(0)
+    setSearch(searchInput)
+  }
 
   const openAdd = () => {
     setForm(emptyForm)
@@ -79,11 +90,21 @@ export default function Authors() {
     <div style={styles.container}>
       <h2>Authors</h2>
 
-      {isAdmin && (
-        <div style={{ marginBottom: '1rem' }}>
-          <button style={styles.btn} onClick={openAdd}>+ Add Author</button>
-        </div>
-      )}
+      <div style={styles.toolbar}>
+        <form onSubmit={handleSearch} style={styles.searchForm}>
+          <input
+            placeholder="Search by name..."
+            value={searchInput}
+            onChange={e => setSearchInput(e.target.value)}
+            style={styles.searchInput}
+          />
+          <button type="submit" style={styles.btn}>Search</button>
+          {search && (
+            <button type="button" style={styles.btnSecondary} onClick={() => { setSearch(''); setSearchInput(''); setPage(0) }}>Clear</button>
+          )}
+        </form>
+        {isAdmin && <button style={styles.btn} onClick={openAdd}>+ Add Author</button>}
+      </div>
 
       {error && <p style={styles.error}>{error}</p>}
 
@@ -117,6 +138,12 @@ export default function Authors() {
           )}
         </tbody>
       </table>
+
+      <div style={styles.pagination}>
+        <button style={styles.btnSecondary} disabled={page === 0} onClick={() => setPage(p => p - 1)}>Previous</button>
+        <span>Page {page + 1} of {totalPages || 1}</span>
+        <button style={styles.btnSecondary} disabled={page + 1 >= totalPages} onClick={() => setPage(p => p + 1)}>Next</button>
+      </div>
 
       {showForm && (
         <div style={styles.overlay}>
@@ -152,6 +179,10 @@ export default function Authors() {
 
 const styles = {
   container: { padding: '2rem' },
+  toolbar: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', gap: '1rem' },
+  searchForm: { display: 'flex', gap: '0.5rem' },
+  searchInput: { padding: '0.5rem', borderRadius: '4px', border: '1px solid #ccc', width: '220px' },
+  pagination: { display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginTop: '1rem' },
   table: { width: '100%', borderCollapse: 'collapse' },
   th: { padding: '0.75rem', backgroundColor: '#1a1a2e', color: 'white', textAlign: 'left' },
   td: { padding: '0.75rem', borderBottom: '1px solid #eee' },

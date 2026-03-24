@@ -6,9 +6,9 @@ import com.booknest.entity.Author;
 import com.booknest.exception.ResourceNotFoundException;
 import com.booknest.repository.AuthorRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -16,8 +16,12 @@ public class AuthorService {
 
     private final AuthorRepository authorRepository;
 
-    public List<AuthorResponse> getAll() {
-        return authorRepository.findAll().stream().map(this::toResponse).toList();
+    public Page<AuthorResponse> getAll(Pageable pageable) {
+        return authorRepository.findAll(pageable).map(this::toResponse);
+    }
+
+    public Page<AuthorResponse> search(String q, Pageable pageable) {
+        return authorRepository.search(q, pageable).map(this::toResponse);
     }
 
     public AuthorResponse getById(Long id) {

@@ -5,12 +5,13 @@ import com.booknest.dto.author.AuthorResponse;
 import com.booknest.service.AuthorService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/authors")
@@ -20,8 +21,15 @@ public class AuthorController {
     private final AuthorService authorService;
 
     @GetMapping
-    public ResponseEntity<List<AuthorResponse>> getAll() {
-        return ResponseEntity.ok(authorService.getAll());
+    public ResponseEntity<Page<AuthorResponse>> getAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String search) {
+        PageRequest pageable = PageRequest.of(page, size, Sort.by("lastName").ascending());
+        Page<AuthorResponse> result = (search != null && !search.isBlank())
+                ? authorService.search(search, pageable)
+                : authorService.getAll(pageable);
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/{id}")
