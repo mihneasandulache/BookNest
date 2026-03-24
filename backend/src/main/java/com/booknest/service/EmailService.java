@@ -15,6 +15,7 @@ public class EmailService {
     @Async
     public void sendWelcomeEmail(String toEmail, String username) {
         SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("noreply@booknest.com");
         message.setTo(toEmail);
         message.setSubject("Welcome to BookNest!");
         message.setText("Hi " + username + ",\n\nWelcome to BookNest! Start exploring and reviewing books.\n\nHappy reading!");
