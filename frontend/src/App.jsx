@@ -10,6 +10,7 @@ import Authors from './pages/Authors'
 import Genres from './pages/Genres'
 import Feedback from './pages/Feedback'
 import BookDetail from './pages/BookDetail'
+import FeedbackAdmin from './pages/FeedbackAdmin'
 
 function Home() {
   return (
@@ -34,6 +35,7 @@ export default function App() {
           <Route path="/authors" element={<ProtectedRoute><Authors /></ProtectedRoute>} />
           <Route path="/genres" element={<ProtectedRoute><Genres /></ProtectedRoute>} />
           <Route path="/feedback" element={<ProtectedRoute><Feedback /></ProtectedRoute>} />
+          <Route path="/admin/feedback" element={<ProtectedRoute requiredRole="ADMIN"><FeedbackAdmin /></ProtectedRoute>} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
